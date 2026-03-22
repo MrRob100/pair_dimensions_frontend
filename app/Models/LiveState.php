@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LiveState extends Model
 {
+    protected $table = 'live_state';
     const CREATED_AT = null;
 
     protected $fillable = [

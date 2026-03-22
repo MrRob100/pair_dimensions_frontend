@@ -9,6 +9,7 @@ import { createChart, CandlestickSeries, LineSeries } from 'lightweight-charts';
 const props = defineProps({
     chartData: { type: Object, required: true },
     withMA: { type: Boolean, default: false },
+    tradeLines: { type: Array, default: () => [] },
 });
 
 const chartContainer = ref(null);
@@ -79,6 +80,20 @@ function buildChart() {
             lastValueVisible: false,
         });
         maSeries.setData(maData);
+    }
+
+    // Draw horizontal blue lines at trade prices
+    if (props.tradeLines.length > 0) {
+        props.tradeLines.forEach(line => {
+            candlestickSeries.createPriceLine({
+                price: line.price,
+                color: '#3b82f6',
+                lineWidth: 1,
+                lineStyle: 0, // solid
+                axisLabelVisible: true,
+                title: line.direction || '',
+            });
+        });
     }
 
     resizeHandler = () => {

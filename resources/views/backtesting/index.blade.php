@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Backtesting Results</title>
+    <title>Pair Dimensions</title>
     <script>
     window.__PAIR_STATE__ = {
         watchingPairIds: @json($watchingPairs->pluck('pair_id')->values()),
@@ -12,6 +12,7 @@
         pairStatuses: @json($pairStatuses),
         watchingPairs: @json($watchingPairs->filter(fn($u) => $u->pair)->map(fn($u) => ['id' => $u->pair->id, 'symbol_1' => $u->pair->symbol_1, 'symbol_2' => $u->pair->symbol_2])->values()),
         livePairs: @json($livePairs->filter(fn($u) => $u->pair)->map(fn($u) => ['id' => $u->pair->id, 'symbol_1' => $u->pair->symbol_1, 'symbol_2' => $u->pair->symbol_2])->values()),
+        isTestnet: @json(config('binance.testnet')),
     }
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
